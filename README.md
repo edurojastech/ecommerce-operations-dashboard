@@ -108,6 +108,24 @@ The project uses Nuxt's default Nitro `node-server` preset, which Vercel auto-de
 
 No custom domain is configured as part of this challenge.
 
+## Deploying to Netlify
+
+The app has no server API routes — all data fetching happens client-side in the browser — so it is generated as a static site (`nuxt generate`) rather than deployed as a Node server. `netlify.toml` at the project root configures this:
+
+```toml
+[build]
+  command = "npm run generate"
+  publish = ".output/public"
+
+[build.environment]
+  NODE_VERSION = "20"
+```
+
+1. Push the repository to GitHub (or another Git provider connected to Netlify).
+2. In Netlify, **Add new site → Import an existing project** and select the repository.
+3. Build settings are read from `netlify.toml` automatically (build command `npm run generate`, publish directory `.output/public`).
+4. Deploy. No environment variables are required — the app calls JSONPlaceholder directly from the client.
+
 ## Production Improvements
 
 This dashboard intentionally does the minimum needed to demonstrate the underlying reasoning. For a real DTC (direct-to-consumer) e-commerce operation, the natural next steps would be:
